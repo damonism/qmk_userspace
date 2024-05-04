@@ -319,6 +319,7 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 };
 */
 
+/*
 // Modify the OLED display to account for the new layers
 
 #ifdef OLED_ENABLE
@@ -478,4 +479,4 @@ bool oled_task_kb(void) {
     return false;
 }
 #endif
-
+*/
