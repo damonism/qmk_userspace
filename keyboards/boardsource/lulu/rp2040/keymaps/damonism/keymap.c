@@ -3,6 +3,9 @@
 
 #include QMK_KEYBOARD_H
 
+// Some custom OLED screens
+#include "oleds.h"
+
 // Sets the default mode, if none has been set
 #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_ALPHAS_MODS
 
@@ -241,9 +244,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [6] = LAYOUT(QK_BOOT, CG_SWAP, CG_NORM, KC_NO,   KC_NO,   KC_NO,                     RGB_MOD, RGB_RMOD, KC_NO, KC_NO, RGB_HUI, RGB_HUD,
-             KC_NO,   KC_NO,   DF(3),   KC_NO,   KC_NO,   CG_TOGG,                   KC_NO,   KC_NO,    KC_NO, KC_NO, RGB_SAI, RGB_SAD,
+             KC_NO,   KC_NO,   DF(0),   KC_NO,   KC_NO,   CG_TOGG,                   KC_NO,   KC_NO,    KC_NO, KC_NO, RGB_SAI, RGB_SAD,
              KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,   KC_NO,    KC_NO, KC_NO, RGB_VAI, RGB_VAD,
-             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_TOG, KC_NO,   KC_NO,   DF(0),    KC_NO, KC_NO, RGB_SPI, RGB_SPD,
+             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   RGB_TOG, KC_NO,   KC_NO,   DF(3),    KC_NO, KC_NO, RGB_SPI, RGB_SPD,
                                         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS
              )
 };
@@ -319,11 +322,10 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 };
 */
 
-/*
 // Modify the OLED display to account for the new layers
 
 #ifdef OLED_ENABLE
-oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) {
         return OLED_ROTATION_180;
     }
@@ -332,7 +334,7 @@ oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
 
 // Solved the default layer detection problem thanks to:
 // https://www.reddit.com/r/olkb/comments/o5924u/comment/h2pq9rd/
-void process_layer_state(void) {
+void process_layer_state_user(void) {
     switch (get_highest_layer(layer_state|default_layer_state)) {
         case 0:
             render_layer_qw_mac();
@@ -358,14 +360,12 @@ void process_layer_state(void) {
     }
 }
 
-bool oled_task_kb(void) {
-    if (!oled_task_user()) { return false; }
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        process_layer_state();
+        process_layer_state_user();
     } else {
-        render_logo();
+        render_logo_lulu();
     }
     return false;
 }
 #endif
-*/
