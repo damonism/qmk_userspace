@@ -73,3 +73,36 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 };
 #endif // defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+
+// The OLED is only on the left-hand side
+
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+//    if (is_keyboard_master()) {
+        return OLED_ROTATION_0;
+//    }
+//    return rotation;
+}
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        oled_write_raw(logo, sizeof(logo));
+    } else {
+        switch (get_highest_layer(layer_state)) {
+            case 0:
+                oled_write_raw(layer_zero, sizeof(layer_zero));
+                break;
+            case 1:
+                oled_write_raw(layer_one, sizeof(layer_one));
+                break;
+            case 2:
+                oled_write_raw(layer_two, sizeof(layer_two));
+                break;
+            case 3:
+                oled_write_raw(layer_three, sizeof(layer_three));
+                break;
+         }
+    }
+    return false;
+}
+#endif
