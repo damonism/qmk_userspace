@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
   
         [0] = LAYOUT_split_3x6_3(
-     	      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,       KC_Y,       KC_U,   KC_I,     KC_O,    KC_P,    KC_BSPC,
+     	  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,       KC_Y,       KC_U,   KC_I,     KC_O,    KC_P,    KC_BSPC,
 	      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,       TD(X_DASH), KC_J,   KC_K,     KC_L,    KC_SCLN, KC_QUOT,
 	      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,       KC_N,       KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, KC_ESC,
 	                                 KC_LGUI, MO(1), KC_SPC,     KC_ENT,     MO(2),   KC_RALT
@@ -176,7 +176,7 @@ void x_finished(tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_TAP: register_code(KC_H); break;
 	// en-dash
         case TD_SINGLE_HOLD: SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0))); break;
-        case TD_DOUBLE_TAP: register_code(KC_ESC); break;SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0))); break;
+        case TD_DOUBLE_TAP: SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0))); break;
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
