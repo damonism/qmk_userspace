@@ -8,3 +8,5 @@
 #define LEADER_TIMEOUT 500
 // Required for VIA with this many layers
 #define DYNAMIC_KEYMAP_LAYER_COUNT 7
+// Enable the keyboard to work properly with a USB hub
+#define SPLIT_WATCHDOG_ENABLE
