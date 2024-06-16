@@ -268,60 +268,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 };
 #endif
 
-/*
-// Leader keys
-
-LEADER_EXTERNS();
-
-void matrix_scan_user(void) {
-    LEADER_DICTIONARY() {
-        leading = false;
-        leader_end();
-
-       // When I press KC_LEAD and then ESC the keyboard is reset
-        SEQ_ONE_KEY(KC_ESC) {
-            reset_keyboard();
-        }
-
-    // For testing purposes.
-        SEQ_ONE_KEY(KC_B) {
-            SEND_STRING("Hooray!");
-        }
-
-        SEQ_ONE_KEY(KC_G) {
-            if (get_highest_layer(default_layer_state) > 0) {
-                // Windows layer
-                SEND_STRING(SS_LCTL("l") SS_TAP(X_RIGHT) " g!" SS_TAP(X_ENT));
-            } else {
-                // Mac layer
-                SEND_STRING(SS_LGUI("l") SS_TAP(X_RIGHT) " g!" SS_TAP(X_ENT));
-            }
-        }
-
-        // LEADER <del>: CTRL-ALT-DEL
-        SEQ_ONE_KEY(KC_DEL) {
-            tap_code16(KC_CAD);
-        }
-
-    }
-}
-*/
-
-// Key overrides
-
-
-/*
-const key_override_t endash_override = ko_make_with_layers_and_negmods(MOD_MASK_ALT, KC_MINS, EN_DASH, (1<<_QWERTY_WIN | 1<<_LOWER_WIN | 1<<_RAISE_WIN), MOD_MASK_CS);
-
-const key_override_t emdash_override = ko_make_with_layers_and_negmods(MOD_MASK_SA, KC_MINS, EM_DASH, 1<<_QWERTY_WIN, MOD_MASK_CTRL);
-
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &endash_override,
-    &emdash_override,
-    NULL
-};
-*/
-
 // Modify the OLED display to account for the new layers
 
 #ifdef OLED_ENABLE
