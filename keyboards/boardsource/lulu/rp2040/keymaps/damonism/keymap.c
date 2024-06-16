@@ -337,22 +337,22 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 void process_layer_state_user(void) {
     switch (get_highest_layer(layer_state|default_layer_state)) {
         case 0:
-            render_layer_qw_mac();
-            break;
-        case 1:
-            render_layer_ra_mac();
-            break;
-        case 2:
-            render_layer_lo_mac();
-            break;
-        case 3:
             render_layer_qw_win();
             break;
-        case 4:
+        case 1:
             render_layer_ra_win();
             break;
-        case 5:
+        case 2:
             render_layer_lo_win();
+            break;
+        case 3:
+            render_layer_qw_mac();
+            break;
+        case 4:
+            render_layer_ra_mac();
+            break;
+        case 5:
+            render_layer_lo_mac();
             break;
         case 6:
             render_layer_ad();
