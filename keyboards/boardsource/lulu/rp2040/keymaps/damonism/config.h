@@ -6,4 +6,5 @@
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 #define LEADER_PER_KEY_TIMING
 #define LEADER_TIMEOUT 500
-
+// Required for VIA with this many layers
+#define DYNAMIC_KEYMAP_LAYER_COUNT 7
