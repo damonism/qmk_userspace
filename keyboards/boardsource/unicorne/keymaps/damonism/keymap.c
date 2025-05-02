@@ -158,25 +158,21 @@ void render_layer_ad(void){
 }
 
 bool oled_task_user(void) {
-    if (is_keyboard_master()) {
-        oled_write_raw(logo, sizeof(logo));
-    } else {
-        switch (get_highest_layer(layer_state)) {
-            case 0:
-                render_layer_qw_win();
-                break;
-            case 1:
-                render_layer_ra_win();
-                break;
-            case 2:
-                render_layer_lo_win();
-                break;
-            case 3:
-                render_layer_ad();
-                break;
-         }
-    }
-    return false;
+      switch (get_highest_layer(layer_state)) {
+          case 0:
+              render_layer_qw_win();
+              break;
+          case 1:
+              render_layer_ra_win();
+              break;
+          case 2:
+              render_layer_lo_win();
+              break;
+          case 3:
+              render_layer_ad();
+              break;
+       }
+  return false;
 }
 
 #endif
