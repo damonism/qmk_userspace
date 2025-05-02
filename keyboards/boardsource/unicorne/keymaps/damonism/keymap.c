@@ -202,3 +202,26 @@ void x_reset(tap_dance_state_t *state, void *user_data) {
 tap_dance_action_t tap_dance_actions[] = {
     [X_DASH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, x_finished, x_reset)
 };
+
+// Include x_dash as a non-breaking key for caps word
+// from: https://docs.qmk.fm/features/caps_word
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        case KC_MINS:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+        case X_DASH:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
