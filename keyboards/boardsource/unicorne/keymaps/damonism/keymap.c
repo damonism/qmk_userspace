@@ -218,7 +218,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_BSPC:
         case KC_DEL:
         case KC_UNDS:
-        case X_DASH:
+        case TD(X_DASH):
             return true;
 
         default:
