@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   
         [0] = LAYOUT_split_3x6_3(
      	  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,       KC_Y,       KC_U,   KC_I,     KC_O,    KC_P,    KC_BSPC,
-	      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,       TD(X_DASH), KC_J,   KC_K,     KC_L,    KC_SCLN, KC_QUOT,
+	      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,       KC_H,       KC_J,   KC_K,     KC_L,    KC_SCLN, KC_QUOT,
 	      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,       KC_N,       KC_M,   KC_COMM,  KC_DOT,  KC_SLSH, KC_ESC,
 	                                 KC_LGUI, MO(1), KC_SPC,     KC_ENT,     MO(2),   KC_RALT
 				 ),
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	
         [2] = LAYOUT_split_3x6_3(
 	      KC_TRNS, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TRNS,
-	      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, KC_GRV,
+	      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   TD(X_DASH), KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, KC_GRV,
 	      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD,
 	                                 KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS
 				 ),
@@ -173,14 +173,14 @@ static td_tap_t xtap_state = {
 void x_finished(tap_dance_state_t *state, void *user_data) {
     xtap_state.state = cur_dance(state);
     switch (xtap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_H); break;
+        case TD_SINGLE_TAP: register_code(KC_MINS); break;
 	// en-dash
         case TD_SINGLE_HOLD: SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0))); break;
         case TD_DOUBLE_TAP: SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_0))); break;
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
-        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_H); register_code(KC_H); break;
+        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_MINS); register_code(KC_MINS); break;
 	// em-dash 
         case TD_TRIPLE_TAP: SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_5) SS_TAP(X_KP_1))); break;
         default: break;
@@ -189,10 +189,10 @@ void x_finished(tap_dance_state_t *state, void *user_data) {
 
 void x_reset(tap_dance_state_t *state, void *user_data) {
     switch (xtap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_H); break;
+        case TD_SINGLE_TAP: unregister_code(KC_MINS); break;
         case TD_SINGLE_HOLD: break;
         case TD_DOUBLE_TAP: break;
-        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_H); break;
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_MINS); break;
         case TD_TRIPLE_TAP: break;
         default: break;
     }
@@ -203,25 +203,3 @@ tap_dance_action_t tap_dance_actions[] = {
     [X_DASH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, x_finished, x_reset)
 };
 
-// Include x_dash as a non-breaking key for caps word
-// from: https://docs.qmk.fm/features/caps_word
-bool caps_word_press_user(uint16_t keycode) {
-    switch (keycode) {
-        // Keycodes that continue Caps Word, with shift applied.
-        case KC_A ... KC_Z:
-        case KC_MINS:
-            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
-            return true;
-
-        // Keycodes that continue Caps Word, without shifting.
-        case KC_1 ... KC_0:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_UNDS:
-        case TD(X_DASH):
-            return true;
-
-        default:
-            return false;  // Deactivate Caps Word.
-    }
-}
