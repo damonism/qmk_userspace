@@ -12,6 +12,7 @@
 #define AUDIO_PWM_DRIVER PWMD6
 #define AUDIO_INIT_DELAY
 #define AUDIO_PWM_CHANNEL RP2040_PWM_CHANNEL_A
+#undef STARTUP_SONG
 #define STARTUP_SONG SONG(STARTUP_SOUND)
 
 //UEFI was not detecting some of my boards
